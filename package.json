@@ -1,0 +1,18 @@
+{
+  "name": "weathertoday",
+  "version": "1.0.0",
+  "description": "Weather Application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
+  },
+  "author": "Gunjan Grover-21355068",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node-fetch": "^3.2.10"
+  }
+}

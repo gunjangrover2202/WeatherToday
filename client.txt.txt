@@ -1,0 +1,286 @@
+<!-- Name- Gunjan Grover
+Student Number- 21355068
+Application Name- Weather Today -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      /* Background code: https://codepen.io/chris22smith/pen/RZogMa */
+      body {
+        font-family: "Maven Pro", sans-serif;
+        height: 100%;
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+      }
+      .card {
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      .container {
+        display: flex;
+      }
+      html {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .bg {
+        animation: slide 3s ease-in-out infinite alternate;
+        background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+        bottom: 0;
+        left: -50%;
+        opacity: 0.5;
+        position: fixed;
+        right: -50%;
+        top: 0;
+        z-index: -1;
+      }
+
+      .bg2 {
+        animation-direction: alternate-reverse;
+        animation-duration: 4s;
+      }
+
+      .bg3 {
+        animation-duration: 5s;
+      }
+
+      .content {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 0.25em;
+        box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.25);
+        box-sizing: border-box;
+        left: 50%;
+        padding: 10vmin;
+        position: fixed;
+        text-align: center;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      h1 {
+        font-family: monospace;
+      }
+
+      @keyframes slide {
+        0% {
+          transform: translateX(-25%);
+        }
+        100% {
+          transform: translateX(25%);
+        }
+      }
+    </style>
+
+    <div id="app" class="weathertoday">
+      <div class="bg"></div>
+      <div class="bg bg2"></div>
+      <div class="bg bg3"></div>
+      <section>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 justify-content-center">
+              <div
+                class="card bg-image justify-content-center my-5 mb-5 align-content-center"
+                id="container-bg"
+                style="
+                  margin-left: 20px;
+                  margin-right: 20px;
+                  backdrop-filter: blur(15px);
+                  background-color: rgba(255, 252, 252, 0.25);
+                "
+              >
+                <h1 style="text-align: center; font-weight: 600">
+                  Weather Today
+                </h1>
+                <div
+                  class="search text-center mb-3 form-inline d-flex opacity-50 justify-content-center"
+                >
+                  <input
+                    id="city"
+                    class="form-control form-control-sm ml-3 w-75"
+                    aria-label="Search"
+                    type="general"
+                    v-on:keyup.enter="getData()"
+                    placeholder="Where to go?"
+                  />
+                  <button
+                    type="button"
+                    v-on:click="getData()"
+                    class="rounded btn"
+                  >
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+                <div>
+                  <h3 style="text-align: center; font-weight: 600">
+                    City: {{citys_name}}
+                  </h3>
+                </div>
+                <table
+                  style="margin-left: 10px; margin-right: 20px"
+                  class="table table-borderless mt-2 mb-2 border-0"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col">Days</th>
+                      <th scope="col">Day 1</th>
+                      <th scope="col">Day 2</th>
+                      <th scope="col">Day 3</th>
+                      <th scope="col">Day 4</th>
+                      <th scope="col">Day 5</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Temperature</th>
+                      <td v-for="object in weatherArray">
+                        <div>{{object}}°C</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Wind Speed</th>
+                      <td v-for="object in windSpeedArray">
+                        <div>{{object}} km/h</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Rainfall</th>
+                      <td v-for="object in temperatureArray">
+                        <div>{{object}}</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="card justify-content-center my-5 mb-5 align-content-center"
+                style="
+                  margin-left: 20px;
+                  margin-right: 20px;
+                  text-align: center;
+                  font-weight: 600;
+                  backdrop-filter: blur(15px);
+                  background-color: rgba(255, 252, 252, 0.25);
+                "
+              >
+                <h1
+                  style="
+                    margin-left: 20px;
+                    margin-right: 20px;
+                    text-align: center;
+                    font-weight: 600;
+                  "
+                >
+                  Advisory
+                </h1>
+                <div class="raincheck" style="text-align: center">
+                  <p style="font-size: 20px">{{raincheck}}</p>
+                </div>
+                <div class="pollutioncheck" style="text-align: center">
+                  <p style="font-size: 20px">{{pollutioncheck}}</p>
+                </div>
+                <div class="temp_outcheck" style="text-align: center">
+                  <p style="font-size: 20px">{{temp_outcheck}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script type="module">
+      import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+      createApp({
+        data() {
+          return {
+            //declaration of variables
+            weatherArray: [],
+            temperatureArray: [],
+            windSpeedArray: [],
+            raincheck: "",
+            pollutioncheck: "",
+            tempcheck: "",
+            temp_outcheck: "",
+            citys_name: "",
+          };
+        },
+        methods: {
+          async getData(city) {
+            this.weatherArray = [];
+            this.temperatureArray = [];
+            this.windSpeedArray = [];
+            this.raincheck = "";
+            this.pollutioncheck = "";
+            this.tempcheck = "";
+            this.temp_outcheck = "";
+            this.citys_name = "";
+            var city = document.getElementById("city").value;
+            const api_key = "http://localhost:5000/weather/" + city;
+            const res = await fetch(api_key)
+              .then((res) => res.json())
+              .catch((err) => {
+                console.log(err);
+              });
+            if (res.Forecast.cod == 404) {
+              alert("Wrong city... please try again");
+            }
+            for (let i = 0; i < 40; i = i + 8) {
+              this.windSpeedArray.push(res.Forecast.list[i].wind.speed);
+              this.weatherArray.push(res.Forecast.list[i].main.temp);
+              this.temperatureArray.push(res.Forecast.list[i].weather[0].main);
+              //raincheck
+              if (res.Forecast.list[i].weather[0].main === "Rain") {
+                this.raincheck = "Carry an Umbrella";
+              }
+            }
+            //pollution level check
+            if (res.Pollution.list[0].components.pm2_5 > 10) {
+              this.pollutioncheck = "Wear a Mask";
+            }
+            //check for temp outside
+            if (res.Forecast.list[0].main.temp > 24) {
+              this.temp_outcheck = "It is Hot outside";
+            } else if (12 < res.Forecast.list[0].main.temp < 24) {
+              this.temp_outcheck = "It's a pleasant day outside";
+            } else if (res.Forecast.list[0].main.temp < 12) {
+              this.temp_outcheck = "It is Cold outside";
+            }
+
+            this.citys_name = res.Forecast.city.name;
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
